@@ -1,0 +1,30 @@
+.item__container {
+    display: flex;
+    max-height: 100px;
+    max-width: 100px;
+    text-align: center;
+    gap: 5px;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    background-color: white;
+    user-select: none;
+    cursor: pointer;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* увеличили силу базовой тени */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    margin-right: 10px;
+}
+
+.item__container:hover {
+    transform: translateY(-3px); /* смещение вверх при наведении */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3); /* увеличили силу тени при наведении */
+}
+
+.item__container > img {
+    width: 60px;
+}
+
+.item__container > p {
+    margin: 0px;
+}

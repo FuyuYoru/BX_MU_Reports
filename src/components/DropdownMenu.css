@@ -1,0 +1,120 @@
+.dropdown__container {
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+}
+
+.dropdown__container .dropdown__container {
+    padding-left: 1rem;
+}
+
+.dropdown__menu {
+    /*max-height: 0;*/
+    /*overflow: hidden;*/
+    transition: max-height 0.3s ease;
+}
+
+/* Кнопка меню - закрытое состояние*/
+.dropdown__menuButton {
+    display: flex;
+    flex-direction: row;
+    border-left: none;
+    /*border-right: 1px solid white;*/
+    justify-content: space-between;
+    text-align: left;
+    align-items: stretch;
+    cursor: pointer;
+    font-weight: var(--ui-font-weight-bold, 700);
+}
+
+/*.dropdown__menuButton > *:not(:last-child) {*/
+/*    border-right: 1px solid white;*/
+/*}*/
+
+.dropdown__menuButton > * {
+    padding: 0.5rem 1rem;
+}
+
+.dropdown__menuButton > label {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown__menuButton__checkbox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+    user-select: none;
+    gap: 1rem;
+}
+
+.dropdown__menuButton__arrow {
+    display: flex;
+    width: 1rem;
+}
+
+.dropdown__menuButton__arrow > img {
+    width: 15px;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+
+/* Кнопка меню - открытое состояние */
+.dropdown__menuButton_opened {
+    display: flex;
+    flex-direction: row;
+    /*border-left: 1px solid;*/
+    /*border-right: 1px solid;*/
+    border-left: 3px solid #2fc6f6;
+    justify-content: space-between;
+    text-align: left;
+    align-items: stretch;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    background-color: #f9f9f9;
+    z-index: 1000;
+    font-weight: var(--ui-font-weight-bold, 700);
+}
+
+.dropdown__menuButton_opened > *:not(:last-child) {
+    /*border-right: 1px solid;*/
+    border: none;
+}
+
+.dropdown__menuButton_opened > * {
+    padding: 0.5rem 1rem;
+}
+
+.dropdown__menuButton_opened .dropdown__menuButton__arrow > img {
+    transform: rotate(180deg);
+}
+
+/* Стрелка кнопки */
+.dropdown__menuButton__arrow {
+    display: flex;
+    width: 1rem;
+}
+
+.dropdown__menuButton__arrow > img {
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+/* Текст кнопки */
+.dropdown__menuButton__text {
+    display: flex;
+    text-align: left;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+input[type="checkbox"] {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}

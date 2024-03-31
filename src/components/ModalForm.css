@@ -1,0 +1,174 @@
+.modal__overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(240, 240, 240, 0.9); /* Light gray background */
+    height: 100%;
+    width: 100%;
+}
+
+.modal__headers {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #216bb6;
+    text-align: left;
+}
+
+.modal__selectors {
+    margin-top: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding-left: 0.5rem;
+    overflow-y: scroll;
+    background-color: #f9f9f9;
+}
+
+.modal__selectors::-webkit-scrollbar {
+    width: 8px; /* Ширина полосы прокрутки */
+}
+
+.modal__selectors::-webkit-scrollbar-track {
+    display: none;
+    background: #f9f9f9; /* Цвет фона полосы прокрутки */
+}
+
+.modal__selectors::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* Цвет полосы прокрутки */
+    border-radius: 4px; /* Скругление углов полосы прокрутки */
+}
+
+.modal__selectors::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa; /* Измененный цвет при наведении на полосу прокрутки */
+}
+
+
+
+.modal__container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 70vh;
+    max-height: 70vh;
+    background-color: #ffffff;
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    justify-content: space-between;
+}
+
+.modal__content {
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    overflow-y: scroll;
+    padding: 20px;
+}
+
+.modal__content::-webkit-scrollbar {
+    width: 8px; /* Ширина полосы прокрутки */
+}
+
+.modal__content::-webkit-scrollbar-track {
+    display: none;
+    background: #f9f9f9; /* Цвет фона полосы прокрутки */
+}
+
+.modal__content::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* Цвет полосы прокрутки */
+    border-radius: 4px; /* Скругление углов полосы прокрутки */
+}
+
+.modal__content::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa; /* Измененный цвет при наведении на полосу прокрутки */
+}
+
+.modal__container hr {
+    border: 1px solid;
+    width: 100%;
+}
+
+.modal__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal__buttons {
+    max-height: 10%;
+    padding: 20px;
+    border-top: 1px solid #ccc;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+}
+
+
+.modal__buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+ }
+
+.modal__loading {
+    border: 8px solid #ffffff; /* White border */
+    border-top: 8px solid #216bb6; /* Blue border on top */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Стили для общего контейнера */
+.datetime-input-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+/* Стили для каждого инпута */
+.datetime-input {
+    box-sizing: border-box;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* При фокусировке инпута */
+.datetime-input:focus {
+    outline: none;
+    border-color: dodgerblue;
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+
+}
+
+.datetime-input-group {
+    align-items: center;
+    justify-content: left;
+    width: 50%;
+}
+
+.datetime-input-group label {
+    text-align: left;
+}

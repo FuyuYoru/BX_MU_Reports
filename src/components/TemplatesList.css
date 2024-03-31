@@ -1,0 +1,27 @@
+.templates__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding-bottom: 0.5rem;
+}
+
+.templates__container > * {
+    flex: 0 0 calc(33.333% - 10px);
+    margin: 5px;
+    aspect-ratio: 1;
+    max-width: calc(33.333% - 10px);
+    max-height: calc(33.333% - 10px);
+}
+
+
+
+
+.text_name {
+    font-family: 'fantasy', sans-serif; /* Задаем шрифт */
+    font-size: 32px; /* Задаем размер шрифта */
+    font-weight: bold; /* Задаем полужирное начертание */
+    color: #5E6DC6;
+
+    text-align: center; /* Выравниваем текст по центру */
+    margin-bottom: 20px; /* Добавляем отступ снизу */
+}
