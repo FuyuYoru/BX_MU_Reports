@@ -28,6 +28,12 @@ export class Reports {
         const storageXml = await fetch(projectPath + '/src/data/storage.xml');
         templates['storage'] = await storageXml.text()
 
+        const storage_desk = await fetch(projectPath + '/src/data/storage_desk.xml');
+        templates['storage_desk'] = await storage_desk.text()
+
+        const route_list = await fetch(projectPath + '/src/data/route_list.xml');
+        templates['route_list'] = await route_list.text()
+
         const settlementsStatement = await fetch(projectPath + '/src/data/settlementsStatement.xml');
         templates['settlementsStatement'] = await settlementsStatement.text()
 
@@ -39,6 +45,15 @@ export class Reports {
 
         const debit = await fetch(projectPath + '/src/data/debit.xml');
         templates['debit'] = await debit.text()
+
+        const points_visit = await fetch(projectPath + '/src/data/points_visit.xml');
+        templates['points_visit'] = await points_visit.text()
+
+        const sale_tp_client = await fetch(projectPath + '/src/data/sale_tp_client.xml');
+        templates['sale_tp_client'] = await sale_tp_client.text()
+
+        const sale_tp_nomenclature = await fetch(projectPath + '/src/data/sale_tp_nomenclature.xml');
+        templates['sale_tp_nomenclature'] = await sale_tp_nomenclature.text()
         const reportsStore = useReportsStore(this.pinia);
         reportsStore.setTemplates(templates);
         this.rootNode.removeChild(this.#loadingContainer);

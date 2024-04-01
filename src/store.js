@@ -6,6 +6,7 @@ import {
   getHierarchy,
   getUserClients,
   getWorkPosition,
+  getHierarchyFrom1C
 } from "./services/bitrixServices";
 import { getSubordinates1 } from "./utilites/userParamsGetters";
 
@@ -92,9 +93,14 @@ export const useReportsStore = defineStore("reports", {
     },
     async asyncLoadClients(storeTarget, guid) {
       const storeData = this.findItemById(this.userAttrsTest, storeTarget);
-      storeData.clients = await getUserClients(guid);
+      if (storeData) {
+        if (!storeData.clients || storeData.clients.length === 0) {
+          storeData.clients = await getUserClients(guid);
+        }
+      }
     },
     async asyncLoadData(workPos = null, target = null) {
+      await this.setHierarchyStructure();
       if (!workPos) {
         workPos = await getWorkPosition();
       }
@@ -114,9 +120,7 @@ export const useReportsStore = defineStore("reports", {
         storeData = this.findItemById(this.userAttrsTest, target) || storeData;
       }
 
-      const hierarchy = await getHierarchy();
-      const subs = getSubordinates1(hierarchy, workPos);
-
+      const subs = getSubordinates1(this.hierarchyStructure, workPos);
       if (subs && subs.length > 0) {
         for (const item of subs) {
           const itemAttrs = await collectDefaultData(item);
@@ -127,7 +131,7 @@ export const useReportsStore = defineStore("reports", {
             storeData.managers = [];
           }
           const check = storeData.managers.find(
-            (manager) => manager.name === itemAttrs.name
+              (manager) => manager.name === itemAttrs.name
           );
           if (!check) {
             storeData.managers.push(itemAttrs);
@@ -140,7 +144,9 @@ export const useReportsStore = defineStore("reports", {
       }
     },
     async setHierarchyStructure() {
-      this.hierarchyStructure = await getHierarchy();
+      if (!this.hierarchyStructure) {
+        this.hierarchyStructure = await getHierarchyFrom1C();
+      }
     },
     findItemById(data, name) {
       if (typeof data === "object") {

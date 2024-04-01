@@ -54,7 +54,7 @@ export const ModalSelectorItems = {
       selectedItems: [],
       isDropdownVisible: false,
       selectAll: false,
-      isDropdownReady: false,
+      isDropdownReady: true,
     };
   },
   components: {

@@ -1,7 +1,7 @@
 import { readJsonFile } from "../utilites/userParamsGetters";
 
-const BITRIX_URL = "http://192.168.91.166";
-// const BITRIX_URL = 'https://bitrix24.martinural.ru';
+// const BITRIX_URL = "http://192.168.91.166";
+const BITRIX_URL = 'https://bitrix24.martinural.ru';
 const WORK_POSITIONS_DIRECTORATE = [
   "Заместитель генерального директора",
   "Генеральный директор",
@@ -10,6 +10,7 @@ const WORK_POSITIONS_DIRECTORATE = [
   "Специалист по информационным технологиям ",
   "Начальник отдела /Юридический отдел/",
   "Логист",
+  "Начальник отдела IT",
 ];
 
 export const getWorkPosition = async () => {
@@ -43,7 +44,7 @@ export const collectDefaultData = async (workPos) => {
   if (!userData || !userData["UF_USR_GUID"] || !userData["UF_USR_STORAGES3"]) {
     return null;
   }
-  const storages = JSON.parse(user["UF_USR_STORAGES3"]);
+  const storages = JSON.parse(userData["UF_USR_STORAGES3"]);
   const secondName = userData["SECOND_NAME"] ? userData["SECOND_NAME"] : "";
   return {
     name:
@@ -170,7 +171,7 @@ export const getUserDiskId = async () => {
 };
 
 export const getHierarchyFrom1C = async () => {
-  const response = await fetch(DOMAIN + "/1cApi/getHierarchy/", {
+  const response = await fetch(BITRIX_URL + "/1cApi/getHierarchy/", {
     method: "GET",
   });
   return response.json();

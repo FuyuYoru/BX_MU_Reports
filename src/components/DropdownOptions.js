@@ -1,3 +1,5 @@
+import "./ModalSelectElement.css";
+
 export const DropdownOptions = {
   props: {
     options: {
@@ -36,7 +38,12 @@ export const DropdownOptions = {
       </div>
     </template>
     <template v-else>
-      <div v-for="(item, index) in options" :key="index" class="selectorItems__option" @click="selectItem(item)">
+      <div 
+      v-for="(item, index) in options" 
+      :key="index" 
+      class="selectorItems__option" 
+      :class="checkOption(item) ? 'selected' : ''"
+      @click="selectItem(item)">
       <span v-if="checkOption(item)">
         <img src="../local/js/local/reports/public/checked.svg" alt="&darr;">
       </span>

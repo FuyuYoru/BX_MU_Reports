@@ -10,17 +10,17 @@
       using: "storages"
     }],
     parameters: [{
-      view: "Дата отчёта",
-      inXml: "ДатаОтчета"
+      view: "Период",
+      inXml: "Период"
     }],
     path: ""
   };
-  var settlementsStatement = {
-    name: "Расчёты с клиентами",
+  var storage_desk = {
+    name: "Ведомость по товарам на складе",
     filters: [{
-      view: "Менеджеры",
-      inXml: "ОбъектРасчетов.Менеджер",
-      using: "managers"
+      view: "Склады",
+      inXml: "Склад",
+      using: "storages"
     }],
     parameters: [{
       view: "Период",
@@ -28,11 +28,24 @@
     }],
     path: ""
   };
-  var grossProfit = {
-    name: "Валовая прибыль",
+  var route_list = {
+    name: "Маршрутный лист",
+    filters: [{
+      view: "Склады",
+      inXml: "Ссылка.Склад",
+      using: "storages"
+    }],
+    parameters: [{
+      view: "Период",
+      inXml: "Период"
+    }],
+    path: ""
+  };
+  var settlementsStatement = {
+    name: "Расчёты с клиентами",
     filters: [{
       view: "Менеджеры",
-      inXml: "Менеджер",
+      inXml: "Заказ.Менеджер",
       using: "managers"
     }],
     parameters: [{
@@ -54,11 +67,82 @@
     }],
     path: ""
   };
+  var debit = {
+    name: "Дебиторская задолженность",
+    filters: [{
+      view: "Менеджеры",
+      inXml: "Партнер.ОсновнойМенеджер",
+      using: "managers"
+    }],
+    parameters: [{
+      view: "Дата отчёта",
+      inXml: "ДатаОтчета"
+    }],
+    path: ""
+  };
+  var grossProfit = {
+    name: "Продажи ТП(Группы)",
+    filters: [{
+      view: "Менеджеры",
+      inXml: "Менеджер",
+      using: "managers"
+    }],
+    parameters: [{
+      view: "Период",
+      inXml: "Период"
+    }],
+    path: ""
+  };
+  var sale_tp_client = {
+    name: "Продажи ТП(Клиенты)",
+    filters: [{
+      view: "Менеджеры",
+      inXml: "Менеджер",
+      using: "managers"
+    }],
+    parameters: [{
+      view: "Период",
+      inXml: "Период"
+    }],
+    path: ""
+  };
+  var sale_tp_nomenclature = {
+    name: "Продажи ТП(Номенклатура)",
+    filters: [{
+      view: "Менеджеры",
+      inXml: "Менеджер",
+      using: "managers"
+    }],
+    parameters: [{
+      view: "Период",
+      inXml: "Период"
+    }],
+    path: ""
+  };
+  var points_visit = {
+    name: "Посещение точек",
+    filters: [{
+      view: "Менеджеры",
+      inXml: "ОсновнойМенеджер",
+      using: "managers"
+    }],
+    parameters: [{
+      view: "Период",
+      inXml: "Период"
+    }],
+    path: ""
+  };
   var templatesJson = {
     storage: storage,
+    storage_desk: storage_desk,
+    route_list: route_list,
     settlementsStatement: settlementsStatement,
+    client: client,
+    debit: debit,
     grossProfit: grossProfit,
-    client: client
+    sale_tp_client: sale_tp_client,
+    sale_tp_nomenclature: sale_tp_nomenclature,
+    points_visit: points_visit
   };
 
   function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -472,9 +556,10 @@
   }();
 
   function _regeneratorRuntime$1() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime$1 = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == babelHelpers["typeof"](h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(babelHelpers["typeof"](e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
-  var BITRIX_URL = "http://192.168.91.166";
-  // const BITRIX_URL = 'https://bitrix24.martinural.ru';
-  var WORK_POSITIONS_DIRECTORATE = ["Заместитель генерального директора", "Генеральный директор", "Помощник генерального директора", "Начальник отдела розничных продаж", "Специалист по информационным технологиям ", "Начальник отдела /Юридический отдел/", "Логист"];
+
+  // const BITRIX_URL = "http://192.168.91.166";
+  var BITRIX_URL = 'https://bitrix24.martinural.ru';
+  var WORK_POSITIONS_DIRECTORATE = ["Заместитель генерального директора", "Генеральный директор", "Помощник генерального директора", "Начальник отдела розничных продаж", "Специалист по информационным технологиям ", "Начальник отдела /Юридический отдел/", "Логист", "Начальник отдела IT"];
   var getWorkPosition$1 = /*#__PURE__*/function () {
     var _ref = babelHelpers.asyncToGenerator( /*#__PURE__*/_regeneratorRuntime$1().mark(function _callee() {
       var response, workPos;
@@ -554,7 +639,7 @@
             }
             return _context3.abrupt("return", null);
           case 6:
-            storages = JSON.parse(user["UF_USR_STORAGES3"]);
+            storages = JSON.parse(userData["UF_USR_STORAGES3"]);
             secondName = userData["SECOND_NAME"] ? userData["SECOND_NAME"] : "";
             return _context3.abrupt("return", {
               name: userData["LAST_NAME"] + " " + userData["NAME"] + " " + secondName + ", " + workPos,
@@ -792,7 +877,7 @@
         while (1) switch (_context11.prev = _context11.next) {
           case 0:
             _context11.next = 2;
-            return fetch(DOMAIN + "/1cApi/getHierarchy/", {
+            return fetch(BITRIX_URL + "/1cApi/getHierarchy/", {
               method: "GET"
             });
           case 2:
@@ -961,11 +1046,19 @@
             while (1) switch (_context4.prev = _context4.next) {
               case 0:
                 storeData = _this4.findItemById(_this4.userAttrsTest, storeTarget);
-                _context4.next = 3;
+                if (!storeData) {
+                  _context4.next = 6;
+                  break;
+                }
+                if (!(!storeData.clients || storeData.clients.length === 0)) {
+                  _context4.next = 6;
+                  break;
+                }
+                _context4.next = 5;
                 return getUserClients$1(guid);
-              case 3:
+              case 5:
                 storeData.clients = _context4.sent;
-              case 4:
+              case 6:
               case "end":
                 return _context4.stop();
             }
@@ -976,60 +1069,59 @@
         var _arguments2 = arguments,
           _this5 = this;
         return babelHelpers.asyncToGenerator( /*#__PURE__*/_regeneratorRuntime$2().mark(function _callee5() {
-          var workPos, target, tmpWorkPos, clients, storeData, hierarchy, subs, _iterator, _step, _loop;
+          var workPos, target, tmpWorkPos, clients, storeData, subs, _iterator, _step, _loop;
           return _regeneratorRuntime$2().wrap(function _callee5$(_context6) {
             while (1) switch (_context6.prev = _context6.next) {
               case 0:
                 workPos = _arguments2.length > 0 && _arguments2[0] !== undefined ? _arguments2[0] : null;
                 target = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : null;
+                _context6.next = 4;
+                return _this5.setHierarchyStructure();
+              case 4:
                 if (workPos) {
-                  _context6.next = 6;
+                  _context6.next = 8;
                   break;
                 }
-                _context6.next = 5;
+                _context6.next = 7;
                 return getWorkPosition$1();
-              case 5:
+              case 7:
                 workPos = _context6.sent;
-              case 6:
+              case 8:
                 if (!(_this5.userAttrsTest === null)) {
-                  _context6.next = 18;
+                  _context6.next = 20;
                   break;
                 }
-                _context6.next = 9;
+                _context6.next = 11;
                 return collectDefaultData(workPos);
-              case 9:
+              case 11:
                 _this5.userAttrsTest = _context6.sent;
-                _context6.next = 12;
+                _context6.next = 14;
                 return getWorkPosition$1();
-              case 12:
+              case 14:
                 tmpWorkPos = _context6.sent;
                 if (!(tmpWorkPos.includes("ТП") && !target)) {
-                  _context6.next = 18;
+                  _context6.next = 20;
                   break;
                 }
-                _context6.next = 16;
+                _context6.next = 18;
                 return getUserClients$1(_this5.userAttrsTest["guid"]);
-              case 16:
+              case 18:
                 clients = _context6.sent;
                 _this5.userAttrsTest["managers"] = [_objectSpread$1(_objectSpread$1({}, _this5.userAttrsTest), {}, {
                   clients: clients
                 })];
-              case 18:
+              case 20:
                 storeData = _this5.userAttrsTest;
                 if (target) {
                   storeData = _this5.findItemById(_this5.userAttrsTest, target) || storeData;
                 }
-                _context6.next = 22;
-                return getHierarchy$1();
-              case 22:
-                hierarchy = _context6.sent;
-                subs = getSubordinates1(hierarchy, workPos);
+                subs = getSubordinates1(_this5.hierarchyStructure, workPos);
                 if (!(subs && subs.length > 0)) {
-                  _context6.next = 43;
+                  _context6.next = 42;
                   break;
                 }
                 _iterator = _createForOfIteratorHelper$1(subs);
-                _context6.prev = 26;
+                _context6.prev = 25;
                 _loop = /*#__PURE__*/_regeneratorRuntime$2().mark(function _loop() {
                   var item, itemAttrs, check;
                   return _regeneratorRuntime$2().wrap(function _loop$(_context5) {
@@ -1067,37 +1159,37 @@
                   }, _loop);
                 });
                 _iterator.s();
-              case 29:
+              case 28:
                 if ((_step = _iterator.n()).done) {
-                  _context6.next = 35;
+                  _context6.next = 34;
                   break;
                 }
-                return _context6.delegateYield(_loop(), "t0", 31);
-              case 31:
+                return _context6.delegateYield(_loop(), "t0", 30);
+              case 30:
                 if (!_context6.t0) {
-                  _context6.next = 33;
+                  _context6.next = 32;
                   break;
                 }
-                return _context6.abrupt("continue", 33);
-              case 33:
-                _context6.next = 29;
+                return _context6.abrupt("continue", 32);
+              case 32:
+                _context6.next = 28;
                 break;
-              case 35:
-                _context6.next = 40;
+              case 34:
+                _context6.next = 39;
                 break;
-              case 37:
-                _context6.prev = 37;
-                _context6.t1 = _context6["catch"](26);
+              case 36:
+                _context6.prev = 36;
+                _context6.t1 = _context6["catch"](25);
                 _iterator.e(_context6.t1);
-              case 40:
-                _context6.prev = 40;
+              case 39:
+                _context6.prev = 39;
                 _iterator.f();
-                return _context6.finish(40);
-              case 43:
+                return _context6.finish(39);
+              case 42:
               case "end":
                 return _context6.stop();
             }
-          }, _callee5, null, [[26, 37, 40, 43]]);
+          }, _callee5, null, [[25, 36, 39, 42]]);
         }))();
       },
       setHierarchyStructure: function setHierarchyStructure() {
@@ -1106,11 +1198,15 @@
           return _regeneratorRuntime$2().wrap(function _callee6$(_context7) {
             while (1) switch (_context7.prev = _context7.next) {
               case 0:
-                _context7.next = 2;
-                return getHierarchy$1();
-              case 2:
-                _this6.hierarchyStructure = _context7.sent;
+                if (_this6.hierarchyStructure) {
+                  _context7.next = 4;
+                  break;
+                }
+                _context7.next = 3;
+                return getHierarchyFrom1C();
               case 3:
+                _this6.hierarchyStructure = _context7.sent;
+              case 4:
               case "end":
                 return _context7.stop();
             }
@@ -1327,7 +1423,7 @@
     mounted: function mounted() {
       this.isLoading = false;
     },
-    template: "\n    <template v-if=\"isLoading\">\n      <div>\n        \u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430...\n      </div>\n    </template>\n    <template v-else>\n      <div v-for=\"(item, index) in options\" :key=\"index\" class=\"selectorItems__option\" @click=\"selectItem(item)\">\n      <span v-if=\"checkOption(item)\">\n        <img src=\"../local/js/local/reports/public/checked.svg\" alt=\"&darr;\">\n      </span>\n        {{ item.name }}\n      </div>\n      <template v-if=\"options.length===0\">\n        <div class=\"selectorItems__option\">\u041D\u0435\u0442 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0445 \u043A\u043B\u0438\u0435\u043D\u0442\u043E\u0432</div>\n      </template>\n    </template>\n  "
+    template: "\n    <template v-if=\"isLoading\">\n      <div>\n        \u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430...\n      </div>\n    </template>\n    <template v-else>\n      <div \n      v-for=\"(item, index) in options\" \n      :key=\"index\" \n      class=\"selectorItems__option\" \n      :class=\"checkOption(item) ? 'selected' : ''\"\n      @click=\"selectItem(item)\">\n      <span v-if=\"checkOption(item)\">\n        <img src=\"../local/js/local/reports/public/checked.svg\" alt=\"&darr;\">\n      </span>\n        {{ item.name }}\n      </div>\n      <template v-if=\"options.length===0\">\n        <div class=\"selectorItems__option\">\u041D\u0435\u0442 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0445 \u043A\u043B\u0438\u0435\u043D\u0442\u043E\u0432</div>\n      </template>\n    </template>\n  "
   };
 
   function getOptions(dataArray, field) {
@@ -1429,7 +1525,7 @@
         selectedItems: [],
         isDropdownVisible: false,
         selectAll: false,
-        isDropdownReady: false
+        isDropdownReady: true
       };
     },
     components: {
@@ -1531,7 +1627,9 @@
     mounted: function mounted() {
       var _this = this;
       var currentDate = new Date();
-      this.asyncLoadData();
+      if (!this.optionsLoaded) {
+        this.asyncLoadData();
+      }
       var startDateTime = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, currentDate.getDate(), 0, 0, 0);
       this.startDate = startDateTime.toISOString().slice(0, 16);
       this.currentDate = currentDate.toISOString().slice(0, 16);
@@ -1859,7 +1957,7 @@
       });
       ears.init();
     },
-    template: "\n    <div class=\"table__MainContainer\">\n      <div class=\"table__Container\">\n        <div class=\"table__buttonsContainer\">\n          <button class=\"downloadButton ui-btn ui-btn-secondary\" @click=\"downloadExcelFile\">\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u043D\u0430 \u0434\u0438\u0441\u043A\n          </button>\n          <button class=\"downloadButton ui-btn ui-btn-secondary\" @click=\"goToViewExcelFile\">\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u0440\u0435\u0434\u0430\u043A\u0442\u043E\u0440\u0435\n          </button>\n        </div>\n        <div class=\"table__content\">\n          <div class=\"table__params\">\n            <template v-if=\"currentTableParams\">\n              <h1>{{ activeRepStructure['name'] }}</h1>\n              <div v-for=\"(value, key) in currentTableParams\" :key=\"key\">\n                <h2>{{ activeRepStructure['filters'].find(item=>item.using === key)['view'] }}: </h2>\n                <h3>\n                  <span v-for=\"(item, index) in value\" :key=\"index\">{{ item.name }}, </span>\n                </h3>\n              </div>\n            </template>\n          </div>\n          <table>\n            <tbody>\n            <TableBody\n                :options=\"currentTableBody\"\n                :rowLevel=\"0\"\n            />\n            </tbody>\n          </table>\n        </div>\n      </div>\n    </div>\n  "
+    template: "\n    <div class=\"table__MainContainer\">\n      <div class=\"table__Container\">\n        <div class=\"table__buttonsContainer\">\n          <button class=\"downloadButton ui-btn ui-btn-secondary\" @click=\"downloadExcelFile\">\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u043D\u0430 \u0434\u0438\u0441\u043A\n          </button>\n          <button class=\"downloadButton ui-btn ui-btn-secondary\" @click=\"goToViewExcelFile\">\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u0440\u0435\u0434\u0430\u043A\u0442\u043E\u0440\u0435\n          </button>\n        </div>\n        <div class=\"table__content\">\n<!--          <div class=\"table__params\">-->\n<!--            <template v-if=\"currentTableParams\">-->\n<!--              <h1>{{ activeRepStructure['name'] }}</h1>-->\n<!--              <div v-for=\"(value, key) in currentTableParams\" :key=\"key\">-->\n<!--                <h2>{{ activeRepStructure['filters'].find(item=>item.using === key)['view'] }}: </h2>-->\n<!--                <h3>-->\n<!--                  <span v-for=\"(item, index) in value\" :key=\"index\">{{ item.name }}, </span>-->\n<!--                </h3>-->\n<!--              </div>-->\n<!--            </template>-->\n<!--          </div>-->\n          <table>\n            <tbody>\n            <TableBody\n                :options=\"currentTableBody\"\n                :rowLevel=\"0\"\n            />\n            </tbody>\n          </table>\n        </div>\n      </div>\n    </div>\n  "
   };
 
   function ownKeys$6(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -1887,16 +1985,19 @@
   function _regeneratorRuntime$4() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime$4 = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == babelHelpers["typeof"](h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(babelHelpers["typeof"](e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
   function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
   function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
-  function _classPrivateFieldGet(s, a) { return s.get(_assertClassBrand(s, a)); }
-  function _classPrivateFieldSet(s, a, r) { return s.set(_assertClassBrand(s, a), r), r; }
-  function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
   var _application = /*#__PURE__*/new WeakMap();
   var _loadingContainer = /*#__PURE__*/new WeakMap();
   var Reports = /*#__PURE__*/function () {
     function Reports(rootNode) {
       babelHelpers.classCallCheck(this, Reports);
-      _classPrivateFieldInitSpec(this, _application, void 0);
-      _classPrivateFieldInitSpec(this, _loadingContainer, void 0);
+      _classPrivateFieldInitSpec(this, _application, {
+        writable: true,
+        value: void 0
+      });
+      _classPrivateFieldInitSpec(this, _loadingContainer, {
+        writable: true,
+        value: void 0
+      });
       this.rootNode = document.querySelector(rootNode);
       this.pinia = ui_vue3_pinia.createPinia();
       this.attachTemplate().then(function (r) {
@@ -1907,14 +2008,14 @@
       key: "loadUserData",
       value: function () {
         var _loadUserData = babelHelpers.asyncToGenerator( /*#__PURE__*/_regeneratorRuntime$4().mark(function _callee() {
-          var projectPath, templates, storageXml, settlementsStatement, grossProfit, client, debit, reportsStore;
+          var projectPath, templates, storageXml, storage_desk, route_list, settlementsStatement, grossProfit, client, debit, points_visit, sale_tp_client, sale_tp_nomenclature, reportsStore;
           return _regeneratorRuntime$4().wrap(function _callee$(_context) {
             while (1) switch (_context.prev = _context.next) {
               case 0:
                 // const start = new Date();
-                _classPrivateFieldSet(_loadingContainer, this, document.createElement('div'));
-                _classPrivateFieldGet(_loadingContainer, this).classList.add('loading-wheel');
-                this.rootNode.appendChild(_classPrivateFieldGet(_loadingContainer, this));
+                babelHelpers.classPrivateFieldSet(this, _loadingContainer, document.createElement('div'));
+                babelHelpers.classPrivateFieldGet(this, _loadingContainer).classList.add('loading-wheel');
+                this.rootNode.appendChild(babelHelpers.classPrivateFieldGet(this, _loadingContainer));
                 projectPath = '/local/js/local/reports';
                 templates = {};
                 _context.next = 7;
@@ -1926,42 +2027,82 @@
               case 10:
                 templates['storage'] = _context.sent;
                 _context.next = 13;
-                return fetch(projectPath + '/src/data/settlementsStatement.xml');
+                return fetch(projectPath + '/src/data/storage_desk.xml');
               case 13:
-                settlementsStatement = _context.sent;
+                storage_desk = _context.sent;
                 _context.next = 16;
-                return settlementsStatement.text();
+                return storage_desk.text();
               case 16:
-                templates['settlementsStatement'] = _context.sent;
+                templates['storage_desk'] = _context.sent;
                 _context.next = 19;
-                return fetch(projectPath + '/src/data/grossProfit.xml');
+                return fetch(projectPath + '/src/data/route_list.xml');
               case 19:
-                grossProfit = _context.sent;
+                route_list = _context.sent;
                 _context.next = 22;
-                return grossProfit.text();
+                return route_list.text();
               case 22:
-                templates['grossProfit'] = _context.sent;
+                templates['route_list'] = _context.sent;
                 _context.next = 25;
-                return fetch(projectPath + '/src/data/client.xml');
+                return fetch(projectPath + '/src/data/settlementsStatement.xml');
               case 25:
-                client = _context.sent;
+                settlementsStatement = _context.sent;
                 _context.next = 28;
-                return client.text();
+                return settlementsStatement.text();
               case 28:
-                templates['client'] = _context.sent;
+                templates['settlementsStatement'] = _context.sent;
                 _context.next = 31;
-                return fetch(projectPath + '/src/data/debit.xml');
+                return fetch(projectPath + '/src/data/grossProfit.xml');
               case 31:
-                debit = _context.sent;
+                grossProfit = _context.sent;
                 _context.next = 34;
-                return debit.text();
+                return grossProfit.text();
               case 34:
+                templates['grossProfit'] = _context.sent;
+                _context.next = 37;
+                return fetch(projectPath + '/src/data/client.xml');
+              case 37:
+                client = _context.sent;
+                _context.next = 40;
+                return client.text();
+              case 40:
+                templates['client'] = _context.sent;
+                _context.next = 43;
+                return fetch(projectPath + '/src/data/debit.xml');
+              case 43:
+                debit = _context.sent;
+                _context.next = 46;
+                return debit.text();
+              case 46:
                 templates['debit'] = _context.sent;
+                _context.next = 49;
+                return fetch(projectPath + '/src/data/points_visit.xml');
+              case 49:
+                points_visit = _context.sent;
+                _context.next = 52;
+                return points_visit.text();
+              case 52:
+                templates['points_visit'] = _context.sent;
+                _context.next = 55;
+                return fetch(projectPath + '/src/data/sale_tp_client.xml');
+              case 55:
+                sale_tp_client = _context.sent;
+                _context.next = 58;
+                return sale_tp_client.text();
+              case 58:
+                templates['sale_tp_client'] = _context.sent;
+                _context.next = 61;
+                return fetch(projectPath + '/src/data/sale_tp_nomenclature.xml');
+              case 61:
+                sale_tp_nomenclature = _context.sent;
+                _context.next = 64;
+                return sale_tp_nomenclature.text();
+              case 64:
+                templates['sale_tp_nomenclature'] = _context.sent;
                 reportsStore = useReportsStore(this.pinia);
                 reportsStore.setTemplates(templates);
-                this.rootNode.removeChild(_classPrivateFieldGet(_loadingContainer, this));
-                _classPrivateFieldSet(_loadingContainer, this, null);
-              case 39:
+                this.rootNode.removeChild(babelHelpers.classPrivateFieldGet(this, _loadingContainer));
+                babelHelpers.classPrivateFieldSet(this, _loadingContainer, null);
+              case 69:
               case "end":
                 return _context.stop();
             }
@@ -1984,7 +2125,7 @@
                 _context2.next = 3;
                 return this.loadUserData();
               case 3:
-                _classPrivateFieldSet(_application, this, ui_vue3.BitrixVue.createApp({
+                babelHelpers.classPrivateFieldSet(this, _application, ui_vue3.BitrixVue.createApp({
                   name: 'Reports',
                   components: {
                     ReportsMain: ReportsMain
@@ -1994,8 +2135,8 @@
                   },
                   template: '<ReportsMain/>'
                 }));
-                _classPrivateFieldGet(_application, this).use(this.pinia);
-                _classPrivateFieldGet(_application, this).mount(this.rootNode);
+                babelHelpers.classPrivateFieldGet(this, _application).use(this.pinia);
+                babelHelpers.classPrivateFieldGet(this, _application).mount(this.rootNode);
               case 6:
               case "end":
                 return _context2.stop();
@@ -2010,8 +2151,8 @@
     }, {
       key: "detachTemplate",
       value: function detachTemplate() {
-        if (_classPrivateFieldGet(_application, this)) {
-          _classPrivateFieldGet(_application, this).unmount();
+        if (babelHelpers.classPrivateFieldGet(this, _application)) {
+          babelHelpers.classPrivateFieldGet(this, _application).unmount();
         }
       }
     }]);

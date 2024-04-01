@@ -28,7 +28,9 @@ export const ModalForm = {
   },
   mounted() {
     const currentDate = new Date();
-    this.asyncLoadData();
+    if (!this.optionsLoaded){
+      this.asyncLoadData();
+    }
     const startDateTime = new Date(
       currentDate.getFullYear(),
       currentDate.getMonth() - 1,

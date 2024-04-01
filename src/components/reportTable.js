@@ -56,17 +56,17 @@ export const ReportTable = {
           </button>
         </div>
         <div class="table__content">
-          <div class="table__params">
-            <template v-if="currentTableParams">
-              <h1>{{ activeRepStructure['name'] }}</h1>
-              <div v-for="(value, key) in currentTableParams" :key="key">
-                <h2>{{ activeRepStructure['filters'].find(item=>item.using === key)['view'] }}: </h2>
-                <h3>
-                  <span v-for="(item, index) in value" :key="index">{{ item.name }}, </span>
-                </h3>
-              </div>
-            </template>
-          </div>
+<!--          <div class="table__params">-->
+<!--            <template v-if="currentTableParams">-->
+<!--              <h1>{{ activeRepStructure['name'] }}</h1>-->
+<!--              <div v-for="(value, key) in currentTableParams" :key="key">-->
+<!--                <h2>{{ activeRepStructure['filters'].find(item=>item.using === key)['view'] }}: </h2>-->
+<!--                <h3>-->
+<!--                  <span v-for="(item, index) in value" :key="index">{{ item.name }}, </span>-->
+<!--                </h3>-->
+<!--              </div>-->
+<!--            </template>-->
+<!--          </div>-->
           <table>
             <tbody>
             <TableBody
