@@ -1,12 +1,8 @@
 //И здесь тоже на всякий
-
 import {BitrixVue, createApp, h} from 'ui.vue3';
 import {createPinia, defineStore, mapState, mapActions} from 'ui.vue3.pinia';
 import {Dom, Loc} from 'main.core';
 import {useReportsStore} from './store';
-import {getUserAttrs} from "./utilites/userParamsGetters";
-
-
 import {ReportsMain} from './components/ReportsMain';
 
 export class Reports {

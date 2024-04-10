@@ -50,7 +50,7 @@ export const ReportTable = {
     <div class="table__MainContainer">
       <div class="table__Container">
         <div class="table__buttonsContainer">
-          <button class="downloadButton ui-btn ui-btn-secondary" @click="downloadExcelFile">Загрузить на диск
+          <button class="downloadButton ui-btn ui-btn-secondary" @click="downloadExcelFile">Скачать
           </button>
           <button class="downloadButton ui-btn ui-btn-secondary" @click="goToViewExcelFile">Открыть в редакторе
           </button>

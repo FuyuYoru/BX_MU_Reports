@@ -1,4 +1,4 @@
-import { readJsonFile } from "../utilites/userParamsGetters";
+import { readJsonFile } from "../utilites/fileReaders";
 
 // const BITRIX_URL = "http://192.168.91.166";
 const BITRIX_URL = 'https://bitrix24.martinural.ru';

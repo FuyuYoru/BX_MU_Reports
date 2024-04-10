@@ -39,12 +39,15 @@ function reformXmlField(xmlObject, fieldName, value) {
     }
 }
 
-function reformXmlPeriod(xmlDoc, startDate, endDate) {
-    const periodElement = Array.from(xmlDoc.querySelectorAll('dataParameters item parameter')).find((item) => item.textContent === 'Период');
+function reformXmlPeriod(xmlDoc,field, startDate, endDate) {
+    console.log(field);
+    const periodElement = Array.from(xmlDoc.querySelectorAll('dataParameters item parameter'))
+        .find((item) => item.textContent === field);
     const endDateElement = xmlDoc.querySelector('dataParameters');
     const parentElement = periodElement.closest('item');
     const startTag = parentElement.querySelector('value startDate');
     const endTag = parentElement.querySelector('value endDate');
+    console.log(startTag, endTag);
     startTag.textContent = formatDate(startDate);
     endTag.textContent = formatDate(endDate);
     return xmlDoc

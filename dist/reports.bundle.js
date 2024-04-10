@@ -36,8 +36,8 @@
       using: "storages"
     }],
     parameters: [{
-      view: "Период",
-      inXml: "Период"
+      view: "Период отгрузки",
+      inXml: "ПериодОтгрузки"
     }],
     path: ""
   };
@@ -384,31 +384,6 @@
         // Если результат не null, возвращаем найденное значение
         if (_result) {
           return _result;
-        }
-      }
-    }
-    // Если target не найден, возвращаем null
-    return null;
-  };
-  var getSubordinates1 = function getSubordinates1(obj, target) {
-    if (obj && Array.isArray(obj)) {
-      // Если obj - массив, проверяем наличие target в массиве
-      return null;
-    }
-    // Проверяем, является ли obj объектом
-    if (obj && babelHelpers["typeof"](obj) === 'object') {
-      // Если obj - объект, проверяем наличие target в качестве ключа
-      if (Object.keys(obj).includes(target)) {
-        // Если target найден в качестве ключа, возвращаем соответствующее значение
-        return Array.isArray(obj[target]) ? obj[target] : Object.keys(obj[target]);
-      }
-
-      // Если target не найден в качестве ключа, рекурсивно вызываем функцию для каждого элемента объекта
-      for (var item in obj) {
-        var result = getSubordinates1(obj[item], target);
-        // Если результат не null, возвращаем найденное значение
-        if (result !== null) {
-          return result;
         }
       }
     }
@@ -894,6 +869,32 @@
     };
   }();
 
+  var getSubordinates1$1 = function getSubordinates1(obj, target) {
+    if (obj && Array.isArray(obj)) {
+      // Если obj - массив, проверяем наличие target в массиве
+      return null;
+    }
+    // Проверяем, является ли obj объектом
+    if (obj && babelHelpers["typeof"](obj) === 'object') {
+      // Если obj - объект, проверяем наличие target в качестве ключа
+      if (Object.keys(obj).includes(target)) {
+        // Если target найден в качестве ключа, возвращаем соответствующее значение
+        return Array.isArray(obj[target]) ? obj[target] : Object.keys(obj[target]);
+      }
+
+      // Если target не найден в качестве ключа, рекурсивно вызываем функцию для каждого элемента объекта
+      for (var item in obj) {
+        var result = getSubordinates1(obj[item], target);
+        // Если результат не null, возвращаем найденное значение
+        if (result !== null) {
+          return result;
+        }
+      }
+    }
+    // Если target не найден, возвращаем null
+    return null;
+  };
+
   function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
   function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
   function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -1115,7 +1116,7 @@
                 if (target) {
                   storeData = _this5.findItemById(_this5.userAttrsTest, target) || storeData;
                 }
-                subs = getSubordinates1(_this5.hierarchyStructure, workPos);
+                subs = getSubordinates1$1(_this5.hierarchyStructure, workPos);
                 if (!(subs && subs.length > 0)) {
                   _context6.next = 42;
                   break;
@@ -1276,7 +1277,15 @@
         return templatesJson;
       }
     },
-    template: "\n<!--      <h1 class = \"text_name\">\u041E\u0442\u0447\u0451\u0442\u044B</h1>-->\n      <div class=\"templates__container\">\n\n      <TemplateItem\n          v-for=\"item in Object.keys(templates)\"\n          :imageSrc=\"'../local/js/local/reports/public/report.svg'\"\n          :templateName=\"templates[item].name\"\n          :handleItemClick=\"()=>onClickItem(item)\"\n      />\n      </div>",
+    mounted: function mounted() {
+      var ears = new ui_ears.Ears({
+        container: document.querySelector(".templates__container"),
+        smallSize: false,
+        noScrollbar: true
+      });
+      ears.init();
+    },
+    template: "\n<!--      <h1 class = \"text_name\">\u041E\u0442\u0447\u0451\u0442\u044B</h1>-->\n    <div>\n      <div class=\"templates__container\">\n      <TemplateItem\n          v-for=\"item in Object.keys(templates)\"\n          :imageSrc=\"'../local/js/local/reports/public/report.svg'\"\n          :templateName=\"templates[item].name\"\n          :handleItemClick=\"()=>onClickItem(item)\"\n      />\n      </div>\n    </div>\n    ",
     styles: "\n    /* \u0412\u0430\u0448\u0438 \u0441\u0442\u0438\u043B\u0438 \u043A\u043E\u043C\u043F\u043E\u043D\u0435\u043D\u0442\u0430 Item */\n    .templates__container {\n      display: flex;\n      flex-direction: row;\n    }"
   };
 
@@ -1317,14 +1326,16 @@
       console.error("Field '".concat(fieldName, "' not found in the XML object."));
     }
   }
-  function reformXmlPeriod(xmlDoc, startDate, endDate) {
+  function reformXmlPeriod(xmlDoc, field, startDate, endDate) {
+    console.log(field);
     var periodElement = Array.from(xmlDoc.querySelectorAll('dataParameters item parameter')).find(function (item) {
-      return item.textContent === 'Период';
+      return item.textContent === field;
     });
     var endDateElement = xmlDoc.querySelector('dataParameters');
     var parentElement = periodElement.closest('item');
     var startTag = parentElement.querySelector('value startDate');
     var endTag = parentElement.querySelector('value endDate');
+    console.log(startTag, endTag);
     startTag.textContent = formatDate(startDate);
     endTag.textContent = formatDate(endDate);
     return xmlDoc;
@@ -1719,7 +1730,7 @@
       xmlReform: function xmlReform() {
         var _this5 = this;
         return babelHelpers.asyncToGenerator( /*#__PURE__*/_regeneratorRuntime$3().mark(function _callee2() {
-          var checkAllFilters, parser, xmlDoc, filterItemLeft, _loop, index, _index, paramType, fileName, response, _JSON$parse, file, data;
+          var checkAllFilters, parser, xmlDoc, filterItemLeft, _loop, index, _index, paramType, paramField, fileName, response, _JSON$parse, file, data;
           return _regeneratorRuntime$3().wrap(function _callee2$(_context3) {
             while (1) switch (_context3.prev = _context3.next) {
               case 0:
@@ -1782,8 +1793,9 @@
               case 16:
                 for (_index in _this5.activeRepStructure.parameters) {
                   paramType = _this5.activeRepStructure.parameters[_index].view;
-                  if (paramType === "Период") {
-                    xmlDoc = reformXmlPeriod(xmlDoc, _this5.startDate, _this5.currentDate);
+                  paramField = _this5.activeRepStructure.parameters[_index].inXml;
+                  if (paramType === "Период" || paramType === "Период отгрузки") {
+                    xmlDoc = reformXmlPeriod(xmlDoc, paramField, _this5.startDate, _this5.currentDate);
                   } else if (paramType === "Дата отчёта") {
                     xmlDoc = reformXmlDate(xmlDoc, _this5.currentDate);
                   }
@@ -1810,7 +1822,7 @@
         }))();
       }
     }),
-    template: "\n    <div class=\"modal__overlay\">\n      <template v-if=\"isLoading\">\n        <div class=\"modal__loading\">\n        </div>\n      </template>\n      <template v-else-if=\"optionsLoaded\">\n        <div class=\"modal__container\">\n          <div class=\"modal__content\">\n            <h1 class=\"modal__headers\">{{ activeRepStructure.name }}</h1>\n            <template v-for=\"(item, index) in activeRepStructure['parameters']\">\n              <h2 class=\"modal__headers\">{{ item.view }}</h2>\n              <template v-if=\"item.view === '\u041F\u0435\u0440\u0438\u043E\u0434'\">\n                <div class=\"datetime-input-container\">\n                  <div class=\"datetime-input-group\">\n                    <label for=\"startDateTime\">\u041D\u0430\u0447\u0430\u043B\u044C\u043D\u0430\u044F \u0434\u0430\u0442\u0430:</label>\n                    <input\n                        type=\"datetime-local\"\n                        id=\"startDateTime\"\n                        v-model=\"startDate\"\n                        class=\"datetime-input\"\n                        @input=\"closeDateTimePicker\"\n                    >\n                  </div>\n                  <div class=\"datetime-input-group\">\n                    <label for=\"endDateTime\">\u041A\u043E\u043D\u0435\u0447\u043D\u0430\u044F \u0434\u0430\u0442\u0430:</label>\n                    <input\n                        type=\"datetime-local\"\n                        id=\"endDateTime\"\n                        v-model=\"currentDate\"\n                        class=\"datetime-input\"\n                        @input=\"closeDateTimePicker\"\n                    />\n                  </div>\n                </div>\n              </template>\n              <template v-else-if=\"item.view === '\u0414\u0430\u0442\u0430 \u043E\u0442\u0447\u0451\u0442\u0430'\">\n                <div class=\"datetime-input-container\">\n                  <div class=\"datetime-input-group\">\n                    <label for=\"startDateTime\">\u0414\u0430\u0442\u0430:</label>\n                    <input\n                        type=\"datetime-local\"\n                        id=\"startDateTime\"\n                        v-model=\"currentDate\"\n                        class=\"datetime-input\"\n                        @input=\"closeDateTimePicker\"\n                    >\n                  </div>\n                </div>\n              </template>\n            </template>\n            <h2 class=\"modal__headers\" v-if=\"activeRepStructure['filters'].length > 0\">\u0424\u0438\u043B\u044C\u0442\u0440 \u0440\u0435\u043A\u0432\u0438\u0437\u0438\u0442\u043E\u0432</h2>\n            <template v-if=\"selectingError\">\n              <h3>{{ selectingError }}</h3>\n            </template>\n            <template v-for=\"(item,index) in activeRepStructure['filters']\" :key=\"index\">\n              <h3 class=\"modal__headers\">{{ item.view }}</h3>\n              <template v-if=\"optionsLoaded\">\n                <ModalSelectedItems\n                    :selectedItems=\"selectedItems[item.using]?selectedItems[item.using]: []\"\n                    :removeItem=\"(option) => filterRemoveItem(item.using, option)\"\n                    :removeAll=\"()=>filterClear(item.using, userAttrsTest[item['using']])\"\n                />\n                <div class=\"modal__selectors\" :ref=\"addRef\">\n                  <template v-if=\"['clients', 'managers'].includes(item.using)\">\n                    <ModalSelectorItems\n                        :filterField=\"item.using\"\n                        :title=\"'\u0414\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0435 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B'\"\n                        :options=\"userAttrsTest['managers']?userAttrsTest['managers']:userAttrsTest[item.using]\"\n                        :onSelect=\"(option) => filterSelectItem(item.using, option)\"\n                        :onRemove=\"(option) => filterRemoveItem(item.using, option)\"\n                        :selectAllAction=\"(options)=>filterSelectAll(item.using, options)\"\n                        :removeAllAction=\"(options)=>filterClear(item.using, options)\"\n                        :checkOption=\"(option) => filterCheckOption(item.using, option)\"\n                        :parentCheckboxState=\"false\"\n                        :scrollContainerRef=\"ContainerRefArray[index]\"\n                    />\n                  </template>\n                  <template v-else>\n                    <ModalSelectorItems\n                        :filterField=\"item.using\"\n                        :title=\"'\u0414\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0435 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B'\"\n                        :options=\"userAttrsTest[item.using]\"\n                        :onSelect=\"(option) => filterSelectItem(item.using, option)\"\n                        :onRemove=\"(option) => filterRemoveItem(item.using, option)\"\n                        :selectAllAction=\"(options)=>filterSelectAll(item.using, options)\"\n                        :removeAllAction=\"(options)=>filterClear(item.using, options)\"\n                        :checkOption=\"(option) => filterCheckOption(item.using, option)\"\n                        :parentCheckboxState=\"false\"\n                        :scrollContainerRef=\"ContainerRefArray[index]\"\n                    />\n                  </template>\n                </div>\n              </template>\n              <template>\n                Zagruzka\n              </template>\n            </template>\n          </div>\n          <div class=\"modal__buttons\">\n            <button class=\"ui-btn ui-btn-danger-light\" @click=\"()=>toggleModal()\">\u041E\u0442\u043C\u0435\u043D\u0430</button>\n            <button class=\"ui-btn ui-btn-success-light\" @click=\"xmlReform\">\u0421\u0444\u043E\u0440\u043C\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043E\u0442\u0447\u0435\u0442</button>\n          </div>\n        </div>\n      </template>\n    </div>\n  "
+    template: "\n    <div class=\"modal__overlay\">\n      <template v-if=\"isLoading\">\n        <div class=\"modal__loading\">\n        </div>\n      </template>\n      <template v-else-if=\"optionsLoaded\">\n        <div class=\"modal__container\">\n          <div class=\"modal__content\">\n            <h1 class=\"modal__headers\">{{ activeRepStructure.name }}</h1>\n            <template v-for=\"(item, index) in activeRepStructure['parameters']\">\n              <h2 class=\"modal__headers\">{{ item.view }}</h2>\n              <template v-if=\"['\u041F\u0435\u0440\u0438\u043E\u0434', '\u041F\u0435\u0440\u0438\u043E\u0434 \u043E\u0442\u0433\u0440\u0443\u0437\u043A\u0438'].includes(item.view)\">\n                <div class=\"datetime-input-container\">\n                  <div class=\"datetime-input-group\">\n                    <label for=\"startDateTime\">\u041D\u0430\u0447\u0430\u043B\u044C\u043D\u0430\u044F \u0434\u0430\u0442\u0430:</label>\n                    <input\n                        type=\"datetime-local\"\n                        id=\"startDateTime\"\n                        v-model=\"startDate\"\n                        class=\"datetime-input\"\n                        @input=\"closeDateTimePicker\"\n                    >\n                  </div>\n                  <div class=\"datetime-input-group\">\n                    <label for=\"endDateTime\">\u041A\u043E\u043D\u0435\u0447\u043D\u0430\u044F \u0434\u0430\u0442\u0430:</label>\n                    <input\n                        type=\"datetime-local\"\n                        id=\"endDateTime\"\n                        v-model=\"currentDate\"\n                        class=\"datetime-input\"\n                        @input=\"closeDateTimePicker\"\n                    />\n                  </div>\n                </div>\n              </template>\n              <template v-else-if=\"item.view === '\u0414\u0430\u0442\u0430 \u043E\u0442\u0447\u0451\u0442\u0430'\">\n                <div class=\"datetime-input-container\">\n                  <div class=\"datetime-input-group\">\n                    <label for=\"startDateTime\">\u0414\u0430\u0442\u0430:</label>\n                    <input\n                        type=\"datetime-local\"\n                        id=\"startDateTime\"\n                        v-model=\"currentDate\"\n                        class=\"datetime-input\"\n                        @input=\"closeDateTimePicker\"\n                    >\n                  </div>\n                </div>\n              </template>\n            </template>\n            <h2 class=\"modal__headers\" v-if=\"activeRepStructure['filters'].length > 0\">\u0424\u0438\u043B\u044C\u0442\u0440 \u0440\u0435\u043A\u0432\u0438\u0437\u0438\u0442\u043E\u0432</h2>\n            <template v-if=\"selectingError\">\n              <h3>{{ selectingError }}</h3>\n            </template>\n            <template v-for=\"(item,index) in activeRepStructure['filters']\" :key=\"index\">\n              <h3 class=\"modal__headers\">{{ item.view }}</h3>\n              <template v-if=\"optionsLoaded\">\n                <ModalSelectedItems\n                    :selectedItems=\"selectedItems[item.using]?selectedItems[item.using]: []\"\n                    :removeItem=\"(option) => filterRemoveItem(item.using, option)\"\n                    :removeAll=\"()=>filterClear(item.using, userAttrsTest[item['using']])\"\n                />\n                <div class=\"modal__selectors\" :ref=\"addRef\">\n                  <template v-if=\"['clients', 'managers'].includes(item.using)\">\n                    <ModalSelectorItems\n                        :filterField=\"item.using\"\n                        :title=\"'\u0414\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0435 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B'\"\n                        :options=\"userAttrsTest['managers']?userAttrsTest['managers']:userAttrsTest[item.using]\"\n                        :onSelect=\"(option) => filterSelectItem(item.using, option)\"\n                        :onRemove=\"(option) => filterRemoveItem(item.using, option)\"\n                        :selectAllAction=\"(options)=>filterSelectAll(item.using, options)\"\n                        :removeAllAction=\"(options)=>filterClear(item.using, options)\"\n                        :checkOption=\"(option) => filterCheckOption(item.using, option)\"\n                        :parentCheckboxState=\"false\"\n                        :scrollContainerRef=\"ContainerRefArray[index]\"\n                    />\n                  </template>\n                  <template v-else>\n                    <ModalSelectorItems\n                        :filterField=\"item.using\"\n                        :title=\"'\u0414\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0435 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B'\"\n                        :options=\"userAttrsTest[item.using]\"\n                        :onSelect=\"(option) => filterSelectItem(item.using, option)\"\n                        :onRemove=\"(option) => filterRemoveItem(item.using, option)\"\n                        :selectAllAction=\"(options)=>filterSelectAll(item.using, options)\"\n                        :removeAllAction=\"(options)=>filterClear(item.using, options)\"\n                        :checkOption=\"(option) => filterCheckOption(item.using, option)\"\n                        :parentCheckboxState=\"false\"\n                        :scrollContainerRef=\"ContainerRefArray[index]\"\n                    />\n                  </template>\n                </div>\n              </template>\n              <template>\n                Zagruzka\n              </template>\n            </template>\n          </div>\n          <div class=\"modal__buttons\">\n            <button class=\"ui-btn ui-btn-danger-light\" @click=\"()=>toggleModal()\">\u041E\u0442\u043C\u0435\u043D\u0430</button>\n            <button class=\"ui-btn ui-btn-success-light\" @click=\"xmlReform\">\u0421\u0444\u043E\u0440\u043C\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043E\u0442\u0447\u0435\u0442</button>\n          </div>\n        </div>\n      </template>\n    </div>\n  "
   };
 
   var Pagination = {
@@ -1957,7 +1969,7 @@
       });
       ears.init();
     },
-    template: "\n    <div class=\"table__MainContainer\">\n      <div class=\"table__Container\">\n        <div class=\"table__buttonsContainer\">\n          <button class=\"downloadButton ui-btn ui-btn-secondary\" @click=\"downloadExcelFile\">\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u043D\u0430 \u0434\u0438\u0441\u043A\n          </button>\n          <button class=\"downloadButton ui-btn ui-btn-secondary\" @click=\"goToViewExcelFile\">\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u0440\u0435\u0434\u0430\u043A\u0442\u043E\u0440\u0435\n          </button>\n        </div>\n        <div class=\"table__content\">\n<!--          <div class=\"table__params\">-->\n<!--            <template v-if=\"currentTableParams\">-->\n<!--              <h1>{{ activeRepStructure['name'] }}</h1>-->\n<!--              <div v-for=\"(value, key) in currentTableParams\" :key=\"key\">-->\n<!--                <h2>{{ activeRepStructure['filters'].find(item=>item.using === key)['view'] }}: </h2>-->\n<!--                <h3>-->\n<!--                  <span v-for=\"(item, index) in value\" :key=\"index\">{{ item.name }}, </span>-->\n<!--                </h3>-->\n<!--              </div>-->\n<!--            </template>-->\n<!--          </div>-->\n          <table>\n            <tbody>\n            <TableBody\n                :options=\"currentTableBody\"\n                :rowLevel=\"0\"\n            />\n            </tbody>\n          </table>\n        </div>\n      </div>\n    </div>\n  "
+    template: "\n    <div class=\"table__MainContainer\">\n      <div class=\"table__Container\">\n        <div class=\"table__buttonsContainer\">\n          <button class=\"downloadButton ui-btn ui-btn-secondary\" @click=\"downloadExcelFile\">\u0421\u043A\u0430\u0447\u0430\u0442\u044C\n          </button>\n          <button class=\"downloadButton ui-btn ui-btn-secondary\" @click=\"goToViewExcelFile\">\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u0440\u0435\u0434\u0430\u043A\u0442\u043E\u0440\u0435\n          </button>\n        </div>\n        <div class=\"table__content\">\n<!--          <div class=\"table__params\">-->\n<!--            <template v-if=\"currentTableParams\">-->\n<!--              <h1>{{ activeRepStructure['name'] }}</h1>-->\n<!--              <div v-for=\"(value, key) in currentTableParams\" :key=\"key\">-->\n<!--                <h2>{{ activeRepStructure['filters'].find(item=>item.using === key)['view'] }}: </h2>-->\n<!--                <h3>-->\n<!--                  <span v-for=\"(item, index) in value\" :key=\"index\">{{ item.name }}, </span>-->\n<!--                </h3>-->\n<!--              </div>-->\n<!--            </template>-->\n<!--          </div>-->\n          <table>\n            <tbody>\n            <TableBody\n                :options=\"currentTableBody\"\n                :rowLevel=\"0\"\n            />\n            </tbody>\n          </table>\n        </div>\n      </div>\n    </div>\n  "
   };
 
   function ownKeys$6(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }

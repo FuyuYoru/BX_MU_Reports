@@ -8,7 +8,7 @@ import {
   getWorkPosition,
   getHierarchyFrom1C
 } from "./services/bitrixServices";
-import { getSubordinates1 } from "./utilites/userParamsGetters";
+import { getSubordinates1 } from "./utilites/recursiveSearchByObjects";
 
 export const useReportsStore = defineStore("reports", {
   state: () => ({
