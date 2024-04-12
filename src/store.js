@@ -6,7 +6,7 @@ import {
   getHierarchy,
   getUserClients,
   getWorkPosition,
-  getHierarchyFrom1C
+  getHierarchyFrom1C,
 } from "./services/bitrixServices";
 import { getSubordinates1 } from "./utilites/recursiveSearchByObjects";
 
@@ -21,12 +21,8 @@ export const useReportsStore = defineStore("reports", {
     activeRepStructure: null,
     error: null,
     hierarchyStructure: null,
-    // pagesCount: 1,
-    // currentPage: 0,
-    // allTableData: null,
+    availableReports: null,
     currentTableBody: null,
-    // currentTableHeader: null,
-    // pageSize: 50,
     currentTableParams: null,
     currentFilename: null,
     modalFilterLoading: false,
@@ -131,7 +127,7 @@ export const useReportsStore = defineStore("reports", {
             storeData.managers = [];
           }
           const check = storeData.managers.find(
-              (manager) => manager.name === itemAttrs.name
+            (manager) => manager.name === itemAttrs.name
           );
           if (!check) {
             storeData.managers.push(itemAttrs);
@@ -145,7 +141,8 @@ export const useReportsStore = defineStore("reports", {
     },
     async setHierarchyStructure() {
       if (!this.hierarchyStructure) {
-        this.hierarchyStructure = await getHierarchyFrom1C();
+        // this.hierarchyStructure = await getHierarchyFrom1C();
+        this.hierarchyStructure = await getHierarchy();
       }
     },
     findItemById(data, name) {

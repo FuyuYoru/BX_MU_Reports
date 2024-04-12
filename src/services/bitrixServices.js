@@ -1,7 +1,7 @@
 import { readJsonFile } from "../utilites/fileReaders";
-
+import { config } from "../config";
 // const BITRIX_URL = "http://192.168.91.166";
-const BITRIX_URL = 'https://bitrix24.martinural.ru';
+// const BITRIX_URL = 'https://bitrix24.martinural.ru';
 const WORK_POSITIONS_DIRECTORATE = [
   "Заместитель генерального директора",
   "Генеральный директор",
@@ -13,17 +13,35 @@ const WORK_POSITIONS_DIRECTORATE = [
   "Начальник отдела IT",
 ];
 
-export const getWorkPosition = async () => {
+export const getCurrentUser = async () => {
   try {
     const response = await BX.rest.callMethod("im.user.get", {});
-    let workPos = response["answer"]["result"]["work_position"];
-    if (WORK_POSITIONS_DIRECTORATE.includes(workPos)) {
+    return response["answer"]["result"];
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+};
+export const getWorkPosition = async () => {
+  try {
+    const user = await getCurrentUser();
+    let workPos = user["work_position"];
+    if (config.directorate_stuff.includes(workPos)) {
       workPos = "Дирекция";
     }
     return workPos;
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
+  }
+};
+
+export const getAvailableReports = async () => {
+  try {
+    const user = await getCurrentUser();
+    const reportsList = await BX.rest.callMethod("im.user.get", {});
+  } catch (error) {
+    return [];
   }
 };
 
@@ -61,8 +79,8 @@ export const collectDefaultData = async (workPos) => {
 };
 
 export const createFilename = async (reportName) => {
-  const response = await BX.rest.callMethod("im.user.get", {});
-  const userId = response["answer"]["result"]["id"];
+  const user = await getCurrentUser();
+  const userId = user["id"];
   const currentDate = new Date();
   return (
     userId +
@@ -81,7 +99,7 @@ export const getReportFrom1C = async (xml, filename) => {
   formData.append("filename", filename);
   formData.append("storageId", storageId);
 
-  const response = await fetch(BITRIX_URL + "/1cApi/getReport", {
+  const response = await fetch(config.bitrix_url + "/1cApi/getReport", {
     method: "POST",
     body: formData,
   });
@@ -138,7 +156,7 @@ export const goToEdit = async (fileId) => {
 export const getUserClients = async (userGuid) => {
   try {
     const response = await fetch(
-      BITRIX_URL + `/1cApi/getPartners/${userGuid}`,
+      config.bitrix_url + `/1cApi/getPartners/${userGuid}`,
       {
         method: "GET",
       }
@@ -160,8 +178,8 @@ export const getHierarchy = async () => {
 };
 
 export const getUserDiskId = async () => {
-  const response = await BX.rest.callMethod("im.user.get", {});
-  let userId = response["answer"]["result"]["id"];
+  const user = await getCurrentUser();
+  let userId = user["id"];
   const response2 = await BX.rest.callMethod("disk.storage.getlist", {
     filter: {
       ENTITY_ID: userId,
@@ -171,7 +189,7 @@ export const getUserDiskId = async () => {
 };
 
 export const getHierarchyFrom1C = async () => {
-  const response = await fetch(BITRIX_URL + "/1cApi/getHierarchy/", {
+  const response = await fetch(config.bitrix_url + "/1cApi/getHierarchy/", {
     method: "GET",
   });
   return response.json();
